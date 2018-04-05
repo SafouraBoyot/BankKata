@@ -21,11 +21,14 @@ public class PrintStatementShould {
 
     private TransactionRepository transactionRepository;
 
+    private StatementPrinter statementPrinter;
+
     @Before
     public void
     setUp() {
         transactionRepository = new TransactionRepository();
-        bankAccountService = new BankAccountService(clock, transactionRepository);
+        statementPrinter = new StatementPrinter();
+        bankAccountService = new BankAccountService(clock, transactionRepository,statementPrinter);
 
     }
 

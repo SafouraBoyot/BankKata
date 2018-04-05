@@ -13,4 +13,8 @@ public class TransactionRepository {
     public void add(Transaction transaction) {
         transactions.add(transaction);
     }
+
+    public List retrieveAll() {
+    throw new UnsupportedOperationException();
+    }
 }

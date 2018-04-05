@@ -1,11 +1,16 @@
+import java.util.List;
+
 public class BankAccountService {
     private final Clock clock;
     private final TransactionRepository transactionRepository;
+    private StatementPrinter statementPrinter;
 
-    public BankAccountService(Clock clock, TransactionRepository transactionRepository) {
+
+    public BankAccountService(Clock clock, TransactionRepository transactionRepository, StatementPrinter statementPrinter) {
 
         this.clock = clock;
         this.transactionRepository = transactionRepository;
+        this.statementPrinter = statementPrinter;
     }
 
     public void deposit(int amount) {
@@ -17,6 +22,8 @@ public class BankAccountService {
     }
 
     public void printStatement() {
-        throw new UnsupportedOperationException();
+        List transactions = transactionRepository.retrieveAll();
+        statementPrinter.print();
+
     }
 }
