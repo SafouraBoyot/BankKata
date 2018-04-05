@@ -1,3 +1,6 @@
+import com.codurance.Output;
+import com.codurance.StatementPrinter;
+import com.codurance.Transaction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

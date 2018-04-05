@@ -1,3 +1,5 @@
+import com.codurance.Transaction;
+import com.codurance.TransactionRepository;
 import org.junit.Test;
 
 import java.util.List;

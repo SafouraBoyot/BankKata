@@ -1,3 +1,5 @@
+package com.codurance;
+
 import java.util.Objects;
 
 public class Transaction {
@@ -23,7 +25,7 @@ public class Transaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return amount == that.amount &&
+        return Objects.equals(amount, that.amount) &&
                 Objects.equals(date, that.date);
     }
 

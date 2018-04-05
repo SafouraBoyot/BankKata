@@ -1,3 +1,5 @@
+package com.codurance;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
