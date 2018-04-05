@@ -23,12 +23,11 @@ public class StatementPrinter {
 
     private void printStatement(List<Transaction> transactions) {
         AtomicInteger balance = new AtomicInteger(0);
-        List<String> reverseTransactions = statementLinesFor(transactions, balance);
-        Collections.reverse(reverseTransactions);
-        for (String statement : reverseTransactions) {
-            output.printLine(statement);
-
-        }
+        List<String> reverseTransactionLines = statementLinesFor(transactions, balance);
+        Collections.reverse(reverseTransactionLines);
+        reverseTransactionLines
+                .stream()
+                .forEach(transactionLine -> output.printLine(transactionLine));
     }
 
 
