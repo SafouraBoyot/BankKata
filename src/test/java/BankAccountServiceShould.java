@@ -17,9 +17,6 @@ public class BankAccountServiceShould {
     private Clock clock;
 
     @Mock
-    private Output outPut;
-
-    @Mock
     private TransactionRepository transactionRepository;
 
     @Mock
@@ -66,6 +63,6 @@ public class BankAccountServiceShould {
 
         bankAccountService.printStatement();
 
-        verify(statementPrinter).print();
+        verify(statementPrinter).print(transactions);
     }
 }

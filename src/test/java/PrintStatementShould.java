@@ -13,9 +13,8 @@ public class PrintStatementShould {
     @Mock
     private Clock clock;
 
-
+    @Mock
     private Output consoleOutPut;
-
 
 
     private BankAccountService bankAccountService;
@@ -28,9 +27,8 @@ public class PrintStatementShould {
     public void
     setUp() {
         transactionRepository = new TransactionRepository();
-        consoleOutPut = new Console();
         statementPrinter = new StatementPrinter(consoleOutPut);
-        bankAccountService = new BankAccountService(clock, transactionRepository,statementPrinter);
+        bankAccountService = new BankAccountService(clock, transactionRepository, statementPrinter);
 
     }
 
@@ -49,8 +47,8 @@ public class PrintStatementShould {
 
         verify(consoleOutPut).printLine("date || credit || debit || balance");
         verify(consoleOutPut).printLine("13/01/2012 || || 500.00 || 2500.00");
-        verify(consoleOutPut).printLine("13/01/2012 || 2000.00 || ||3000.00");
-        verify(consoleOutPut).printLine("10/01/2012 || 1000.00 || ||1000.00");
+        verify(consoleOutPut).printLine("13/01/2012 || 2000.00 || || 3000.00");
+        verify(consoleOutPut).printLine("10/01/2012 || 1000.00 || || 1000.00");
 
     }
 

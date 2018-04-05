@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransactionRepository {
@@ -15,6 +16,6 @@ public class TransactionRepository {
     }
 
     public List retrieveAll() {
-    throw new UnsupportedOperationException();
+        return Collections.unmodifiableList(transactions);
     }
 }

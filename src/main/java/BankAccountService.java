@@ -23,7 +23,7 @@ public class BankAccountService {
 
     public void printStatement() {
         List transactions = transactionRepository.retrieveAll();
-        statementPrinter.print();
+        statementPrinter.print(transactions);
 
     }
 }

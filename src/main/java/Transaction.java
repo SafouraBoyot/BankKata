@@ -1,12 +1,21 @@
 import java.util.Objects;
 
 public class Transaction {
-    private final int amount;
+    private final Integer amount;
     private final String date;
 
-    public Transaction(int amount, String date) {
+    public Transaction(Integer amount, String date) {
         this.amount = amount;
         this.date = date;
+    }
+
+
+    public Integer amount() {
+        return amount;
+    }
+
+    public String date() {
+        return date;
     }
 
     @Override
