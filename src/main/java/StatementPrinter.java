@@ -1,5 +1,4 @@
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,11 +33,11 @@ public class StatementPrinter {
     private List<String> statementLinesFor(List<Transaction> transactions, AtomicInteger balance) {
         return transactions
                 .stream()
-                .map(transaction -> statementLineFor(balance, transaction))
+                .map(transaction -> formatStatementLineFor(balance, transaction))
                 .collect(toList());
     }
 
-    private String statementLineFor(AtomicInteger balance, Transaction transaction) {
+    private String formatStatementLineFor(AtomicInteger balance, Transaction transaction) {
         DecimalFormat df = new DecimalFormat("#.00");
         String statementLine = null;
         if (transaction.amount() < 0) {
