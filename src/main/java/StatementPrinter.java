@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.util.stream.Collectors.toList;
+
 public class StatementPrinter {
 
     private static final String HEADER = "date || credit || debit || balance";
@@ -16,12 +18,12 @@ public class StatementPrinter {
 
     public void print(List<Transaction> transactions) {
         printHeader();
-        printTransactions(transactions);
+        printStatement(transactions);
     }
 
-    private void printTransactions(List<Transaction> transactions) {
+    private void printStatement(List<Transaction> transactions) {
         AtomicInteger balance = new AtomicInteger(0);
-        List<String> reverseTransactions = createStatementFor(transactions, balance);
+        List<String> reverseTransactions = statementLinesFor(transactions, balance);
         Collections.reverse(reverseTransactions);
         for (String statement : reverseTransactions) {
             output.printLine(statement);
@@ -30,18 +32,23 @@ public class StatementPrinter {
     }
 
 
-    private List<String> createStatementFor(List<Transaction> transactions, AtomicInteger balance) {
-        List<String> statements = new ArrayList<>();
+    private List<String> statementLinesFor(List<Transaction> transactions, AtomicInteger balance) {
+        return transactions
+                .stream()
+                .map(transaction -> statementLineFor(balance, transaction))
+                .collect(toList());
+    }
+
+    private String statementLineFor(AtomicInteger balance, Transaction transaction) {
         DecimalFormat df = new DecimalFormat("#.00");
-        for (Transaction transaction : transactions) {
-            if (transaction.amount() < 0) {
-                statements.add(transaction.date() + " ||" + " || " + df.format(Math.abs(transaction.amount())) + " || " + df.format(balance.addAndGet(transaction.amount())));
-            }
-            if (transaction.amount() > 0) {
-                statements.add(transaction.date() + " || " + df.format(Math.abs(transaction.amount())) + " ||" + " || " + df.format(balance.addAndGet(transaction.amount())));
-            }
+        String statementLine = null;
+        if (transaction.amount() < 0) {
+            statementLine = transaction.date() + " ||" + " || " + df.format(Math.abs(transaction.amount())) + " || " + df.format(balance.addAndGet(transaction.amount()));
         }
-        return statements;
+        if (transaction.amount() > 0) {
+            statementLine = transaction.date() + " || " + df.format(Math.abs(transaction.amount())) + " ||" + " || " + df.format(balance.addAndGet(transaction.amount()));
+        }
+        return statementLine;
     }
 
     private void printHeader() {
