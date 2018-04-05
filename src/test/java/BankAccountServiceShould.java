@@ -38,5 +38,13 @@ public class BankAccountServiceShould {
         verify(transactionRepository).add(new Transaction(1000,"10-01-2012"));
     }
 
-    
+
+    @Test public void
+    accept_withdrawal(){
+        given(clock.today()).willReturn("14-01-2012");
+
+        bankAccountService.withdraw(500);
+
+        verify(transactionRepository).add(new Transaction(-500,"14-01-2012"));
+    }
 }

@@ -37,6 +37,7 @@ public class PrintStatementShould {
         bankAccountService.deposit(1000);
         bankAccountService.deposit(2000);
         bankAccountService.withdraw(500);
+
         bankAccountService.printStatement();
 
         verify(outPut).printLine("date || credit || debit || balance");

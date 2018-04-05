@@ -13,7 +13,7 @@ public class BankAccountService {
     }
 
     public void withdraw(int amount) {
-        throw new UnsupportedOperationException();
+        transactionRepository.add(new Transaction(-amount,clock.today()));
     }
 
     public void printStatement() {
