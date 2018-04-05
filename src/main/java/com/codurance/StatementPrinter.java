@@ -17,14 +17,18 @@ public class StatementPrinter {
         this.output = output;
     }
 
-    public void print(List<Transaction> transactions) {
+    public void printStatement(List<Transaction> transactions) {
         printHeader();
-        printStatement(transactions);
+        printBody(transactions);
     }
 
-    private void printStatement(List<Transaction> transactions) {
+    private void printHeader() {
+        output.printLine(HEADER);
+    }
+
+    private void printBody(List<Transaction> transactions) {
         AtomicInteger balance = new AtomicInteger(0);
-        List<String> reverseTransactionLines = statementLinesFor(transactions, balance);
+        List<String> reverseTransactionLines = statementBodyLinesFor(transactions, balance);
         Collections.reverse(reverseTransactionLines);
         reverseTransactionLines
                 .stream()
@@ -32,26 +36,25 @@ public class StatementPrinter {
     }
 
 
-    private List<String> statementLinesFor(List<Transaction> transactions, AtomicInteger balance) {
+    private List<String> statementBodyLinesFor(List<Transaction> transactions, AtomicInteger balance) {
         return transactions
                 .stream()
-                .map(transaction -> formatStatementLineFor(balance, transaction))
+                .map(transaction -> formatStatementBodyLineFor(balance, transaction))
                 .collect(toList());
     }
 
-    private String formatStatementLineFor(AtomicInteger balance, Transaction transaction) {
+    private String formatStatementBodyLineFor(AtomicInteger balance, Transaction transaction) {
         DecimalFormat df = new DecimalFormat("#.00");
+        Integer amount = transaction.amount();
+        String date = transaction.date();
         String statementLine = null;
         if (transaction.amount() < 0) {
-            statementLine = transaction.date() + " ||" + " || " + df.format(Math.abs(transaction.amount())) + " || " + df.format(balance.addAndGet(transaction.amount()));
+            statementLine = date + " ||" + " || " + df.format(Math.abs(amount)) + " || " + df.format(balance.addAndGet(amount));
         }
         if (transaction.amount() > 0) {
-            statementLine = transaction.date() + " || " + df.format(Math.abs(transaction.amount())) + " ||" + " || " + df.format(balance.addAndGet(transaction.amount()));
+            statementLine = date + " || " + df.format(Math.abs(amount)) + " ||" + " || " + df.format(balance.addAndGet(amount));
         }
         return statementLine;
     }
 
-    private void printHeader() {
-        output.printLine(HEADER);
-    }
 }

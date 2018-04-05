@@ -27,7 +27,7 @@ public class StatementPrinterShould {
 
         StatementPrinter statementPrinter = new StatementPrinter(consoleOutput);
 
-        statementPrinter.print(transactions);
+        statementPrinter.printStatement(transactions);
 
         verify(consoleOutput).printLine("date || credit || debit || balance");
         verify(consoleOutput).printLine("14/01/2012 || || 500.00 || 2500.00");

@@ -64,6 +64,6 @@ public class BankAccountServiceShould {
 
         bankAccountService.printStatement();
 
-        verify(statementPrinter).print(transactions);
+        verify(statementPrinter).printStatement(transactions);
     }
 }

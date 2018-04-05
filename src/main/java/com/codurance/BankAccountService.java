@@ -25,7 +25,7 @@ public class BankAccountService {
 
     public void printStatement() {
         List transactions = transactionRepository.retrieveAll();
-        statementPrinter.print(transactions);
+        statementPrinter.printStatement(transactions);
 
     }
 }
