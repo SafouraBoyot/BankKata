@@ -1,5 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TransactionRepository {
-    public void addDeposit(Transaction transaction) {
-        throw new UnsupportedOperationException();
+
+
+    private final List<Transaction> transactions;
+
+    public TransactionRepository() {
+        this.transactions = new ArrayList<>();
+    }
+
+    public void add(Transaction transaction) {
+        transactions.add(transaction);
     }
 }

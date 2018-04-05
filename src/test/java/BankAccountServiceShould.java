@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -15,7 +16,9 @@ public class BankAccountServiceShould {
     @Mock
     private Output outPut;
 
+    @Mock
     private TransactionRepository transactionRepository;
+
 
     private BankAccountService bankAccountService;
 
@@ -24,23 +27,16 @@ public class BankAccountServiceShould {
     public void
     setUp() {
         bankAccountService = new BankAccountService(clock, transactionRepository);
-        transactionRepository = new TransactionRepository();
 
     }
-
-    @Test
-    public void
-    print_statement_with_all_transactions() {
+    @Test public void
+    accept_deposit(){
+        given(clock.today()).willReturn("10-01-2012");
 
         bankAccountService.deposit(1000);
-        bankAccountService.deposit(2000);
-        bankAccountService.withdraw(500);
-        bankAccountService.printStatement();
 
-        verify(outPut).printLine("date || credit || debit || balance");
-        verify(outPut).printLine("14/01/2012 || || 500.00 || 2500.00");
-        verify(outPut).printLine("13/01/2012 || 2000.00 || ||3000.00");
-        verify(outPut).printLine("10/01/2012 || 1000.00 || ||1000.00");
-
+        verify(transactionRepository).add(new Transaction(1000,"10-01-2012"));
     }
+
+    
 }
