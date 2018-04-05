@@ -14,7 +14,7 @@ public class PrintStatementShould {
     private Clock clock;
 
     @Mock
-    private Output consoleOutPut;
+    private Output consoleOutput;
 
 
     private BankAccountService bankAccountService;
@@ -27,7 +27,7 @@ public class PrintStatementShould {
     public void
     setUp() {
         transactionRepository = new TransactionRepository();
-        statementPrinter = new StatementPrinter(consoleOutPut);
+        statementPrinter = new StatementPrinter(consoleOutput);
         bankAccountService = new BankAccountService(clock, transactionRepository, statementPrinter);
 
     }
@@ -37,7 +37,7 @@ public class PrintStatementShould {
     public void
     print_statement_with_all_transactions() {
 
-        given(clock.today()).willReturn("10/01/2012", "13/01/2012", "13/01/2012");
+        given(clock.today()).willReturn("10/01/2012", "13/01/2012", "14/01/2012");
 
         bankAccountService.deposit(1000);
         bankAccountService.deposit(2000);
@@ -45,10 +45,10 @@ public class PrintStatementShould {
 
         bankAccountService.printStatement();
 
-        verify(consoleOutPut).printLine("date || credit || debit || balance");
-        verify(consoleOutPut).printLine("13/01/2012 || || 500.00 || 2500.00");
-        verify(consoleOutPut).printLine("13/01/2012 || 2000.00 || || 3000.00");
-        verify(consoleOutPut).printLine("10/01/2012 || 1000.00 || || 1000.00");
+        verify(consoleOutput).printLine("date || credit || debit || balance");
+        verify(consoleOutput).printLine("14/01/2012 || || 500.00 || 2500.00");
+        verify(consoleOutput).printLine("13/01/2012 || 2000.00 || || 3000.00");
+        verify(consoleOutput).printLine("10/01/2012 || 1000.00 || || 1000.00");
 
     }
 
