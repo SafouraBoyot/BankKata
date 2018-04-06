@@ -12,7 +12,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BankAccountServiceShould {
+public class BankAccountShould {
 
     @Mock
     private Clock clock;
@@ -26,35 +26,35 @@ public class BankAccountServiceShould {
     @Mock
     private StatementPrinter statementPrinter;
 
-    private BankAccountService bankAccountService;
+    private BankAccount bankAccount;
 
 
     @Before
     public void
     setUp() {
-        bankAccountService = new BankAccountService(clock, transactionRepository, statementPrinter);
+        bankAccount = new BankAccount(clock, transactionRepository, statementPrinter);
 
     }
 
     @Test
     public void
     accept_deposit() {
-        given(clock.today()).willReturn("10-01-2012");
+        given(clock.today()).willReturn("10/01/2012");
 
-        bankAccountService.deposit(1000);
+        bankAccount.deposit(1000);
 
-        verify(transactionRepository).add(new Transaction(1000, "10-01-2012"));
+        verify(transactionRepository).add(new Transaction(1000, "10/01/2012"));
     }
 
 
     @Test
     public void
     accept_withdrawal() {
-        given(clock.today()).willReturn("14-01-2012");
+        given(clock.today()).willReturn("14/01/2012");
 
-        bankAccountService.withdraw(500);
+        bankAccount.withdraw(500);
 
-        verify(transactionRepository).add(new Transaction(-500, "14-01-2012"));
+        verify(transactionRepository).add(new Transaction(-500, "14/01/2012"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BankAccountServiceShould {
     print_statement() {
         given(transactionRepository.retrieveAll()).willReturn(transactions);
 
-        bankAccountService.printStatement();
+        bankAccount.printStatement();
 
         verify(statementPrinter).printStatement(transactions);
     }

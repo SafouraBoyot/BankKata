@@ -47,14 +47,10 @@ public class StatementPrinter {
         DecimalFormat df = new DecimalFormat("#.00");
         Integer amount = transaction.amount();
         String date = transaction.date();
-        String statementLine = null;
         if (transaction.amount() < 0) {
-            statementLine = date + " ||" + " || " + df.format(Math.abs(amount)) + " || " + df.format(balance.addAndGet(amount));
+            return date + " ||" + " || " + df.format(Math.abs(amount)) + " || " + df.format(balance.addAndGet(amount));
         }
-        if (transaction.amount() > 0) {
-            statementLine = date + " || " + df.format(Math.abs(amount)) + " ||" + " || " + df.format(balance.addAndGet(amount));
-        }
-        return statementLine;
+        return date + " || " + df.format(Math.abs(amount)) + " ||" + " || " + df.format(balance.addAndGet(amount));
     }
 
 }

@@ -7,12 +7,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PrintStatementShould {
+public class PrintStatementFeature {
     @Mock
     private Clock clock;
 
@@ -20,7 +19,7 @@ public class PrintStatementShould {
     private Output consoleOutput;
 
 
-    private BankAccountService bankAccountService;
+    private BankAccount bankAccount;
 
     private TransactionRepository transactionRepository;
 
@@ -31,7 +30,7 @@ public class PrintStatementShould {
     setUp() {
         transactionRepository = new TransactionRepository();
         statementPrinter = new StatementPrinter(consoleOutput);
-        bankAccountService = new BankAccountService(clock, transactionRepository, statementPrinter);
+        bankAccount = new BankAccount(clock, transactionRepository, statementPrinter);
 
     }
 
@@ -41,12 +40,11 @@ public class PrintStatementShould {
     print_statement_with_all_transactions() {
 
         given(clock.today()).willReturn("10/01/2012", "13/01/2012", "14/01/2012");
+        bankAccount.deposit(1000);
+        bankAccount.deposit(2000);
+        bankAccount.withdraw(500);
 
-        bankAccountService.deposit(1000);
-        bankAccountService.deposit(2000);
-        bankAccountService.withdraw(500);
-
-        bankAccountService.printStatement();
+        bankAccount.printStatement();
 
         verify(consoleOutput).printLine("date || credit || debit || balance");
         verify(consoleOutput).printLine("14/01/2012 || || 500.00 || 2500.00");
